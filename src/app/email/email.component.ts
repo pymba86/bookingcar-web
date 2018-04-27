@@ -31,7 +31,7 @@ export class EmailComponent implements OnInit, AfterContentInit {
   }
 
   ngAfterContentInit() {
-    const quill = new Quill('#editor-container', {
+    const quill = new Quill('#editor-pages', {
       modules: {
         toolbar: {
           container: '#toolbar-toolbar'

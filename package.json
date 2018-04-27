@@ -23,6 +23,8 @@
     "@angular/platform-browser-dynamic": "5.0.2",
     "@angular/router": "5.0.2",
     "@ng-bootstrap/ng-bootstrap": "1.0.0-beta.5",
+    "@ngrx/effects": "^5.2.0",
+    "@ngrx/store": "^5.2.0",
     "@ngx-translate/core": "8.0.0",
     "@ngx-translate/http-loader": "2.0.0",
     "@swimlane/ngx-charts": "6.1.0",

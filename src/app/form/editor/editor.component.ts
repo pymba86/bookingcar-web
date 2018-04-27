@@ -8,7 +8,7 @@ import * as Quill from 'quill';
 })
 export class EditorComponent implements OnInit {
   ngOnInit() {
-    const quill = new Quill('#editor-container', {
+    const quill = new Quill('#editor-pages', {
       modules: {
         toolbar: {
           container: '#toolbar-toolbar'
