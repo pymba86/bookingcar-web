@@ -8,32 +8,35 @@ export const enum AuthActionType {
   Logout = '[Auth] Logout'
 }
 
-export class Login implements Action {
+export interface AuthAction<T extends Auth> extends Action {
+  payload: T;
+}
+
+export class Login implements AuthAction<Auth> {
   readonly type = AuthActionType.Login;
 
   constructor(public payload: Auth) {
   }
 }
 
-export class LoginSuccess implements Action {
-  readonly type = AuthActionType.LoginSuccess;
-
-  constructor(public payload: { auth: Auth }) {
-  }
-}
-
-export class LoginFailure implements Action {
-  readonly type = AuthActionType.LoginFailure;
-
-  constructor(public payload: { error: string }) {
-  }
-}
-
-export class Logout implements Action {
+export class Logout implements AuthAction<Auth> {
   readonly type = AuthActionType.Logout;
 
   constructor(public payload: Auth) {
   }
 }
 
-export type AuthActions = | Login | LoginSuccess | LoginFailure | Logout;
+export class LoginSuccess<T extends Auth> implements AuthAction<T> {
+  readonly type = AuthActionType.LoginSuccess;
+
+  constructor(public payload: T) {
+  }
+}
+
+export class LoginFailure<T extends Auth> implements AuthAction<T> {
+  readonly type = AuthActionType.LoginFailure;
+
+  constructor(public payload: T) {
+  }
+}
+

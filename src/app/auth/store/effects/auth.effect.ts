@@ -7,11 +7,10 @@ import {AuthActionType, Login, LoginFailure, LoginSuccess} from '../actions/auth
 import {Observable} from 'rxjs/Observable';
 
 @Injectable()
-export class AuthEffect<T extends Auth> {
+export class AuthEffects<T extends Auth> {
 
   constructor(private actions: Actions,
-              private authService: AuthService<T>,
-              private router: Router) {
+              private authService: AuthService<T>) {
   }
 
   @Effect()
@@ -20,19 +19,17 @@ export class AuthEffect<T extends Auth> {
     .map((action: Login) => action.payload)
     .switchMap(payload => {
       return this.authService.login(payload)
-        .map((auth) => {
-          return new LoginSuccess({auth});
+        .map((model: T) => {
+          return new LoginSuccess<T>(model);
         })
         .catch((error) => {
-          return Observable.of(new LoginFailure({error: error}));
+          return Observable.of(new LoginFailure<T>(error));
         });
     });
 
   @Effect({dispatch: false})
   loginSuccess = this.actions
     .ofType(AuthActionType.LoginSuccess)
-    .do(() => this.router.navigate(['/']));
+    .do(() => console.log('loginSuccess'));
 
-  @Effect({dispatch: false})
-  loginFailure = this.actions.pipe(ofType(AuthActionType.LoginFailure));
 }
