@@ -11,9 +11,9 @@ export abstract class AuthComponent<T extends Auth> {
   getModel = createSelector(this.getFractalState, (state: AuthState<T>): T => state.model);
   getIsAuthenticated = createSelector(this.getFractalState, (state: AuthState<T>): boolean => state.isAuthenticated);
 
-  model: Store<T> = this.store.select(this.getModel);
-  state: Store<AuthState<T>> = this.store.select(this.getState);
-  isAuthenticated: Store<boolean> = this.store.select(this.getIsAuthenticated);
+  public model: Store<T> = this.store.select(this.getModel);
+  public state: Store<AuthState<T>> = this.store.select(this.getState);
+  public isAuthenticated: Store<boolean> = this.store.select(this.getIsAuthenticated);
 
   constructor(protected store: Store<AuthState<T>>) {
   }

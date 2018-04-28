@@ -3,14 +3,17 @@ import {User} from '../models/user.model';
 import {Component, OnInit} from '@angular/core';
 import {AuthState} from '../../auth/models/state.model';
 import {Store} from '@ngrx/store';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-auth',
-  template: `
-		<h4> User Authentication </h4>
-	`
+  template: `<h4> User Authentication {{ user.email}} and {{ isAuth }}</h4>`
 })
 export class UserComponent extends AuthComponent<User> implements OnInit {
+
+  user: User;
+  isAuth: boolean;
+
   constructor(protected _store: Store<AuthState<User>>) {
     super(_store);
   }
@@ -23,6 +26,8 @@ export class UserComponent extends AuthComponent<User> implements OnInit {
     };
 
     this.login(user);
+    this.model.subscribe(model => this.user = model);
+    this.isAuthenticated.subscribe(isAuthenticated => this.isAuth = isAuthenticated);
   }
 
 }

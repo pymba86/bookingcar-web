@@ -15,8 +15,8 @@ import {reducers} from '../auth/store/reducers/auth.reducer';
     CommonModule,
     HttpClientModule,
     RouterModule,
-    StoreModule.forFeature('auth', reducers),
-    EffectsModule.forFeature([UserEffects])
+    StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([UserEffects])
   ],
   declarations: [
     UserComponent

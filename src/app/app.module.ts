@@ -44,8 +44,7 @@ export function createTranslateLoader(http: HttpClient) {
       }
     }),
     NgbModule.forRoot(),
-    SidebarModule.forRoot(),
-    AgmCoreModule.forRoot({apiKey: 'YOURAPIKEY'})
+    SidebarModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
