@@ -6,7 +6,9 @@ import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'app-auth',
-  template: `<h4> User Authentication {{ isAuth }}</h4>`
+  template: `<h4> User Authentication {{ isAuth }}</h4>
+  <button (click)="LogIn()">Login</button>
+  `
 })
 export class UserAuthComponent extends AuthComponent<User> implements OnInit {
 
@@ -18,15 +20,16 @@ export class UserAuthComponent extends AuthComponent<User> implements OnInit {
   }
 
   ngOnInit(): void {
+    // this.model.subscribe(model => this.user = model);
+    this.isAuthenticated.subscribe(isAuthenticated => this.isAuth = isAuthenticated);
+  }
 
+  LogIn(): void {
     const user: User = {
       username: 'user',
       password: 'user'
     };
-
     this.login(user);
-   // this.model.subscribe(model => this.user = model);
-    this.isAuthenticated.subscribe(isAuthenticated => this.isAuth = isAuthenticated);
   }
 
 }

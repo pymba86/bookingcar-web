@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {AuthEffects} from '../../../auth/store/effects/auth.effect';
+import {AuthEffects} from '../../../auth/store/effects/auth.effects';
 import {User} from '../../models/user.model';
 import {UserAuthService} from '../../services/user-auth.service';
 import {Actions} from '@ngrx/effects';
