@@ -2,7 +2,7 @@ import {Routes} from '@angular/router';
 
 import {AdminLayoutComponent} from './layouts/admin/admin-layout.component';
 import {AuthLayoutComponent} from './layouts/auth/auth-layout.component';
-import {UserComponent} from './user/components/user.component';
+import {UserAuthComponent} from './user/containers/user-auth.component';
 
 export const AppRoutes: Routes = [
   {
@@ -73,7 +73,7 @@ export const AppRoutes: Routes = [
       path: 'landing',
       loadChildren: './landing/landing.module#LandingModule'
     },
-      {path: 'user', component: UserComponent}
+      {path: 'user', component: UserAuthComponent}
     ]
   }, {
     path: '**',

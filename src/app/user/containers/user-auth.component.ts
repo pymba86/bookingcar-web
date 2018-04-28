@@ -1,15 +1,14 @@
-import {AuthComponent} from '../../auth/components/auth.component';
+import {AuthComponent} from '../../auth/containers/auth.component';
 import {User} from '../models/user.model';
 import {Component, OnInit} from '@angular/core';
 import {AuthState} from '../../auth/models/state.model';
 import {Store} from '@ngrx/store';
-import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-auth',
-  template: `<h4> User Authentication {{ user.email}} and {{ isAuth }}</h4>`
+  template: `<h4> User Authentication {{ isAuth }}</h4>`
 })
-export class UserComponent extends AuthComponent<User> implements OnInit {
+export class UserAuthComponent extends AuthComponent<User> implements OnInit {
 
   user: User;
   isAuth: boolean;
@@ -26,7 +25,7 @@ export class UserComponent extends AuthComponent<User> implements OnInit {
     };
 
     this.login(user);
-    this.model.subscribe(model => this.user = model);
+   // this.model.subscribe(model => this.user = model);
     this.isAuthenticated.subscribe(isAuthenticated => this.isAuth = isAuthenticated);
   }
 
