@@ -1,10 +1,9 @@
 import {Auth} from '../models/auth.model';
 import {createFeatureSelector, createSelector, Store} from '@ngrx/store';
 import {AuthState} from '../models/state.model';
-import {Component} from '@angular/core';
 import {Login} from '../store/actions/auth.actions';
 
-@Component({})
+
 export abstract class AuthComponent<T extends Auth> {
   getFractalState = createFeatureSelector<AuthState<T>>('auth');
   getState = createSelector(this.getFractalState, (state: AuthState<T>) => state);

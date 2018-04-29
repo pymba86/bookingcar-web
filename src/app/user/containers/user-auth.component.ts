@@ -7,8 +7,7 @@ import {Store} from '@ngrx/store';
 @Component({
   selector: 'app-auth',
   template: `<h4> User Authentication {{ isAuth }}</h4>
-  <button (click)="LogIn()">Login</button>
-  `
+  <button (click)="LogIn()">Login</button>`
 })
 export class UserAuthComponent extends AuthComponent<User> implements OnInit {
 
