@@ -9,12 +9,11 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SidebarModule } from 'ng-sidebar';
-import { AgmCoreModule } from '@agm/core';
 
 import { AppRoutes } from './app.routing';
 import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin/admin-layout.component';
-import { AuthLayoutComponent } from './layouts/auth/auth-layout.component';
+import { SystemLayoutComponent } from './layouts/system/system-layout.component';
 import { SharedModule } from './shared/shared.module';
 import {UserModule} from './user/user.module';
 
@@ -26,7 +25,7 @@ export function createTranslateLoader(http: HttpClient) {
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    AuthLayoutComponent
+    SystemLayoutComponent
   ],
   imports: [
     BrowserModule,

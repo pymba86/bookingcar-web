@@ -4,4 +4,4 @@ import { Component } from '@angular/core';
   selector: 'app-layout',
   template: '<router-outlet></router-outlet>'
 })
-export class AuthLayoutComponent {}
+export class SystemLayoutComponent {}
