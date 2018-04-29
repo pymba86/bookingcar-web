@@ -6,7 +6,7 @@ export const initialState: AuthState<any> = {
   model: null
 };
 
-export function reducer(state: AuthState<any> = initialState, action: AuthAction<any>): AuthState<any> {
+export function loginReducer(state: AuthState<any> = initialState, action: AuthAction<any>): AuthState<any> {
   switch (action.type) {
     case AuthActionType.LoginSuccess:
       return {
@@ -22,5 +22,5 @@ export function reducer(state: AuthState<any> = initialState, action: AuthAction
 }
 
 export const reducers = {
-  auth: reducer
+  auth: loginReducer
 };

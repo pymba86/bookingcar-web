@@ -4,17 +4,20 @@ import {AuthService} from '../../services/auth.service';
 import {Auth} from '../../models/auth.model';
 import {AuthActionType, Login, LoginFailure, LoginSuccess} from '../actions/auth.actions';
 import { of } from 'rxjs/observable/of';
-import {tap} from 'rxjs/operators';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/do';
 import 'rxjs/operator/switchMap';
+import {Action} from '@ngrx/store';
 
 @Injectable()
-export class AuthEffects<T extends Auth> {
+export abstract class AuthEffects<T extends Auth> {
 
   constructor(private actions: Actions,
               private authService: AuthService<T>) {
   }
+
+  abstract success(auth: Action);
 
   @Effect()
   login = this.actions
@@ -27,12 +30,12 @@ export class AuthEffects<T extends Auth> {
     );
 
   @Effect({dispatch: false})
-  loginSuccess = this.actions.pipe(
-    ofType(AuthActionType.LoginSuccess),
-    tap((user) => {
-      console.log(user);
-    })
-  );
+  loginSuccess = this.actions
+    .ofType(AuthActionType.LoginSuccess)
+    .do(action => {
+      this.success(action);
+    });
+
 
   @Effect({ dispatch: false })
   LogInFailure = this.actions.pipe(
