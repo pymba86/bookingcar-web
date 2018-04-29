@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Effect, Actions, ofType} from '@ngrx/effects';
-import {AuthService} from '../../services/auth.service';
-import {Auth} from '../../models/auth.model';
-import {AuthActionType, Login, LoginFailure, LoginSuccess} from '../actions/auth.actions';
+import {AuthService} from '../services/auth.service';
+import {Auth} from '../models/auth.model';
+import {AuthActionType, Login, LoginFailure, LoginSuccess} from './auth.actions';
 import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
@@ -17,7 +17,8 @@ export abstract class AuthEffects<T extends Auth> {
               private authService: AuthService<T>) {
   }
 
-  abstract success(auth: Action);
+  abstract success(auth: Action): void;
+  abstract redirect(auth: Action): void;
 
   @Effect()
   login = this.actions
@@ -41,4 +42,11 @@ export abstract class AuthEffects<T extends Auth> {
   LogInFailure = this.actions.pipe(
     ofType(AuthActionType.LoginFailure)
   );
+
+  @Effect({dispatch: false})
+  loginRedirect = this.actions
+    .ofType(AuthActionType.Redirect)
+    .do(action => {
+      this.redirect(action);
+    });
 }

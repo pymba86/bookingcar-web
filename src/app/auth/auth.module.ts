@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {StoreModule} from '@ngrx/store';
-import {reducers} from './store/reducers/auth.reducer';
+import {reducers} from './store/auth.reducer';
 import {LoginFormComponent} from './components/login-form/login-form.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 

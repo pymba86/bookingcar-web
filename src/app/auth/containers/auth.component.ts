@@ -1,7 +1,7 @@
 import {Auth} from '../models/auth.model';
 import {createFeatureSelector, createSelector, Store} from '@ngrx/store';
 import {AuthState} from '../models/state.model';
-import {Login} from '../store/actions/auth.actions';
+import {Login} from '../store/auth.actions';
 
 
 export abstract class AuthComponent<T extends Auth> {

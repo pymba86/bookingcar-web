@@ -1,11 +1,12 @@
 import {Action} from '@ngrx/store';
-import {Auth} from '../../models/auth.model';
+import {Auth} from '../models/auth.model';
 
 export const enum AuthActionType {
   Login = '[Auth] Login',
   LoginSuccess = '[Auth] Login Success',
   LoginFailure = '[Auth] Login Failure',
-  Logout = '[Auth] Logout'
+  Logout = '[Auth] Logout',
+  Redirect = '[Auth] Redirect'
 }
 
 export interface AuthAction<T extends Auth> extends Action {
@@ -37,6 +38,13 @@ export class LoginFailure<T extends Auth> implements AuthAction<T> {
   readonly type = AuthActionType.LoginFailure;
 
   constructor(public payload: T) {
+  }
+}
+
+export class LoginRedirect implements AuthAction<Auth> {
+  readonly type = AuthActionType.Redirect;
+
+  constructor(public payload: Auth) {
   }
 }
 

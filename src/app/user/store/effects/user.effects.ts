@@ -4,13 +4,17 @@ import {UserAuthService} from '../../services/user-auth.service';
 import {Actions} from '@ngrx/effects';
 import {Router} from '@angular/router';
 import {Action} from '@ngrx/store';
-import {AuthEffects} from '../../../auth/store/effects/auth.effects';
+import {AuthEffects} from '../../../auth/store/auth.effects';
 
 
 @Injectable()
 export class UserEffects extends AuthEffects<User> {
 
-  success(auth: Action) {
+  redirect(auth: Action): void {
+    this._router.navigate(['/login']);
+  }
+
+  success(auth: Action): void {
     this._router.navigate(['/']);
   }
 
