@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "decima"
+    "name": "bx"
   },
   "apps": [
     {
@@ -19,14 +19,8 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "assets/fonts/linea/styles.css",
-        "assets/fonts/header/_flaticon.scss",
-        "../node_modules/dragula/dist/dragula.css",
-        "../node_modules/quill/dist/quill.snow.css",
-        "../node_modules/angular-calendar/scss/angular-calendar.scss",
-        "../node_modules/@swimlane/ngx-datatable/release/index.css",
-        "assets/fonts/data-table/icons.css",
-        "assets/styles/app.scss"
+        "assets/styles/vendor.scss",
+        "assets/styles/global.scss"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
@@ -62,6 +56,24 @@
   },
   "defaults": {
     "styleExt": "scss",
-    "component": {}
-  }
+    "prefixInterfaces": false,
+    "component" : {
+      "inlineStyle" : true,
+      "inlineTemplate": false,
+      "spec": false
+    },
+    "directive" : {
+      "spec": false
+    },
+    "guard" : {
+      "spec": false
+    },
+    "pipe" : {
+      "spec": false
+    },
+    "service" : {
+      "spec": false
+    }
+  },
+  "packageManager": "npm"
 }

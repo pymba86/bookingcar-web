@@ -6,8 +6,12 @@ import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'app-auth',
-  template: `
-    <app-login-form (submitted)="login($event)"></app-login-form>`
+  template: `<div class="page">
+    <div class="page-single">
+      <div class="container">
+        <div class="row">
+          <div class="col col-login mx-auto">
+            <app-login-form (submitted)="login($event)"></app-login-form></div></div></div></div></div>`
 })
 export class UserAuthComponent extends AuthComponent<User> implements OnInit {
 

@@ -17,8 +17,8 @@ export abstract class AuthEffects<T extends Auth> {
               private authService: AuthService<T>) {
   }
 
-  abstract success(auth: Action): void;
-  abstract redirect(auth: Action): void;
+  abstract success(auth: Action);
+  abstract redirect(auth: Action);
 
   @Effect()
   login = this.actions

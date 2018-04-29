@@ -3,11 +3,12 @@ import {Routes} from '@angular/router';
 import {AdminLayoutComponent} from './layouts/admin/admin-layout.component';
 import {SystemLayoutComponent} from './layouts/system/system-layout.component';
 import {UserAuthComponent} from './user/containers/user-auth.component';
+import {DefaultLayoutComponent} from './layouts/default/default-layout.component';
 
 export const AppRoutes: Routes = [
   {
     path: '',
-    component: AdminLayoutComponent,
+    component: DefaultLayoutComponent,
     children: [{
       path: '',
       loadChildren: './dashboard/dashboard.module#DashboardModule'
@@ -59,7 +60,11 @@ export const AppRoutes: Routes = [
     }, {
       path: 'docs',
       loadChildren: './docs/docs.module#DocsModule'
-    }]
+    },
+      {
+        path: 'cars',
+        loadChildren: './cars/cars.module#CarsModule'
+      }]
   }, {
     path: '',
     component: SystemLayoutComponent,
@@ -73,7 +78,7 @@ export const AppRoutes: Routes = [
       path: 'landing',
       loadChildren: './landing/landing.module#LandingModule'
     },
-      {path: 'user', component: UserAuthComponent}
+      {path: 'login', component: UserAuthComponent}
     ]
   }, {
     path: '**',
