@@ -4,7 +4,7 @@ import {UserAuthService} from '../../services/user-auth.service';
 import {Actions} from '@ngrx/effects';
 import {Router} from '@angular/router';
 import {Action} from '@ngrx/store';
-import {AuthEffects} from '../../../auth/store/auth.effects';
+import {AuthEffects} from '@tabler/angular-auth/store/auth.effects';
 
 
 @Injectable()

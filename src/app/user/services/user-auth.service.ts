@@ -1,11 +1,11 @@
 import {Observable} from 'rxjs/Observable';
-import {HttpClient, HttpResponse} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Auth} from '../../auth/models/auth.model';
-import {AuthService} from '../../auth/services/auth.service';
 import {User} from '../models/user.model';
-import { of } from 'rxjs/observable/of';
-import { _throw } from 'rxjs/observable/throw';
+import {of} from 'rxjs/observable/of';
+import {_throw} from 'rxjs/observable/throw';
+import {AuthService} from '@tabler/angular-auth/services/auth.service';
+import {Auth} from '@tabler/angular-auth/models/auth.model';
 
 
 @Injectable()

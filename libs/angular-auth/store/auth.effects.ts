@@ -1,9 +1,8 @@
-import {Injectable} from '@angular/core';
-import {Effect, Actions, ofType} from '@ngrx/effects';
+import {Actions, Effect, ofType} from '@ngrx/effects';
 import {AuthService} from '../services/auth.service';
 import {Auth} from '../models/auth.model';
 import {AuthActionType, Login, LoginFailure, LoginSuccess} from './auth.actions';
-import { of } from 'rxjs/observable/of';
+import {of} from 'rxjs/observable/of';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/do';
@@ -11,11 +10,10 @@ import 'rxjs/add/operator/switchMap';
 import {Action} from '@ngrx/store';
 import 'rxjs/add/operator/map';
 
-@Injectable()
 export abstract class AuthEffects<T extends Auth> {
 
-  constructor(private actions: Actions,
-              private authService: AuthService<T>) {
+  constructor(public actions: Actions,
+              public authService: AuthService<T>) {
   }
 
   abstract success(auth: Action);

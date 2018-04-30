@@ -1,8 +1,8 @@
-import {AuthComponent} from '../../auth/containers/auth.component';
 import {User} from '../models/user.model';
 import {Component, OnInit} from '@angular/core';
-import {AuthState} from '../../auth/models/state.model';
 import {Store} from '@ngrx/store';
+import {AuthState} from '@tabler/angular-auth/models/state.model';
+import {AuthComponent} from '@tabler/angular-auth/containers/auth.component';
 
 @Component({
   selector: 'ui-pages-auth',

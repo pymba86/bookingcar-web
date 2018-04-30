@@ -6,7 +6,7 @@ import {EffectsModule} from '@ngrx/effects';
 import {UserEffects} from './store/effects/user.effects';
 import {UserAuthComponent} from './containers/user-auth.component';
 import {UserAuthService} from './services/user-auth.service';
-import {AuthModule} from '../auth/auth.module';
+import {AuthModule} from '@tabler/angular-auth/auth.module';
 
 
 export const routes: Routes = [

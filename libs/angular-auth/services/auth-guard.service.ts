@@ -1,4 +1,4 @@
-import {Inject, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {CanActivate} from '@angular/router';
 import {AuthState} from '../models/state.model';
 import {createFeatureSelector, createSelector, Store} from '@ngrx/store';

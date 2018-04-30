@@ -1,4 +1,5 @@
-import {Auth} from '../../auth/models/auth.model';
+import {Auth} from '@tabler/angular-auth/models/auth.model';
+
 
 export interface User extends Auth {
   id?: number;

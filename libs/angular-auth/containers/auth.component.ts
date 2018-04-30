@@ -17,7 +17,7 @@ export abstract class AuthComponent<T extends Auth> {
   constructor(protected store: Store<AuthState<T>>) {
   }
 
-  protected login(auth: Auth) {
+  login(auth: Auth) : void {
     this.store.dispatch(new Login(auth));
   }
 }
