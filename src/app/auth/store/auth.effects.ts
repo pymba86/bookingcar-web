@@ -7,8 +7,9 @@ import { of } from 'rxjs/observable/of';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/do';
-import 'rxjs/operator/switchMap';
+import 'rxjs/add/operator/switchMap';
 import {Action} from '@ngrx/store';
+import 'rxjs/add/operator/map';
 
 @Injectable()
 export abstract class AuthEffects<T extends Auth> {

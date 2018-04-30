@@ -1,5 +1,5 @@
 {
-  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "$schema": "./node_modules/@nrwl/schematics/src/schema.json",
   "project": {
     "name": "bx"
   },
@@ -18,9 +18,9 @@
       "tsconfig": "tsconfig.app.json",
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
+      "name" : "app",
       "styles": [
-        "assets/styles/vendor.scss",
-        "assets/styles/global.scss"
+        "assets/styles/styles.scss"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
@@ -28,6 +28,34 @@
         "dev": "environments/environment.ts",
         "prod": "environments/environment.prod.ts"
       }
+    },
+    {
+      "name": "angular-core",
+      "root": "libs/angular-core/src",
+      "test": "../../../test.js",
+      "appRoot": "",
+      "tags": []
+    },
+    {
+      "name": "angular-forms",
+      "root": "libs/angular-forms/src",
+      "test": "../../../test.js",
+      "appRoot": "",
+      "tags": []
+    },
+    {
+      "name": "angular-styles",
+      "root": "libs/angular-styles/src",
+      "test": "../../../test.js",
+      "appRoot": "",
+      "tags": []
+    },
+    {
+      "name": "angular-ui",
+      "root": "libs/angular-ui/src",
+      "test": "../../../test.js",
+      "appRoot": "",
+      "tags": []
     }
   ],
   "e2e": {
@@ -57,6 +85,14 @@
   "defaults": {
     "styleExt": "scss",
     "prefixInterfaces": false,
+    "schematics": {
+      "collection": "@nrwl/schematics",
+      "postGenerate": "npm run format",
+      "newProject": [
+        "app",
+        "lib"
+      ]
+    },
     "component" : {
       "inlineStyle" : true,
       "inlineTemplate": false,

@@ -5,7 +5,7 @@ import {createFeatureSelector, createSelector, Store} from '@ngrx/store';
 import {Auth} from '../models/auth.model';
 import {Observable} from 'rxjs/Observable';
 import {LoginRedirect} from '../store/auth.actions';
-
+import 'rxjs/add/operator/take';
 
 @Injectable()
 export class AuthGuard<T extends Auth> implements CanActivate {

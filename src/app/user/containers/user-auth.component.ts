@@ -5,15 +5,21 @@ import {AuthState} from '../../auth/models/state.model';
 import {Store} from '@ngrx/store';
 
 @Component({
-  selector: 'app-auth',
-  template: `<div class="page">
+  selector: 'ui-pages-auth',
+  template: `
     <div class="page-single">
       <div class="container">
         <div class="row">
-          <div class="col col-login mx-auto">
-            <app-login-form (submitted)="login($event)"></app-login-form></div></div></div></div></div>`
+          <div class="col {{ colClass }} mx-auto">
+            <app-login-form (submitted)="login($event)"></app-login-form>
+          </div>
+        </div>
+      </div>
+    </div>`
 })
 export class UserAuthComponent extends AuthComponent<User> implements OnInit {
+
+  public colClass = 'col-login';
 
   constructor(protected _store: Store<AuthState<User>>) {
     super(_store);
