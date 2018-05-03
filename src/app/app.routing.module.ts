@@ -7,7 +7,8 @@ export const routes: Routes = [
     path: '',
     component: LayoutComponent,
     children: [
-      {path: 'empty', children: []}
+      {path: 'empty', children: []},
+      {path: 'cars', loadChildren: './cars/cars.module#CarsModule'}
     ]
   },
   {
@@ -18,6 +19,6 @@ export const routes: Routes = [
       {path: '**', redirectTo: '/404?message=Invalid route'}
     ]
   }
-  ];
+];
 
 export const AppRoutingModule: ModuleWithProviders = RouterModule.forRoot(routes);
