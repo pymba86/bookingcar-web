@@ -16,6 +16,13 @@ export const SET_CURRENT_CAR_ID = '[Cars] SET CURRENT CAR ID';
 export const PATCH = '[Cars] PATCH';
 export const PATCH_SUCCESS = '[Cars] PATCH SUCCESS';
 
+export const DELETE = '[Cars] DELETE';
+export const DELETE_SUCCESS = '[Cars] DELETE SUCCESS';
+
+export const CREATE = '[Cars] CREATE';
+export const CREATE_SUCCESS = '[Cars] CREATE SUCCESS';
+
+
 export class LoadAll implements Action {
   readonly type = LOAD_ALL;
 
@@ -67,7 +74,37 @@ export class PatchSuccess implements Action {
 
 export class Failure implements Action {
   readonly type = FAILURE;
-  constructor (public payload: {concern: 'CREATE' | 'PATCH', error: any}) {}
+
+  constructor(public payload: { concern: 'CREATE' | 'PATCH', error: any }) {
+  }
+}
+
+export class Delete implements Action {
+  readonly type = DELETE;
+
+  constructor(public payload: number) {
+  }
+}
+
+export class Create implements Action {
+  readonly type = CREATE;
+
+  constructor(public payload: Car) {
+  }
+}
+
+export class CreateSuccess implements Action {
+  readonly type = CREATE_SUCCESS;
+
+  constructor(public payload: Car) {
+  }
+}
+
+export class DeleteSuccess implements Action {
+  readonly type = DELETE_SUCCESS;
+
+  constructor(public payload: number) {
+  }
 }
 
 export type All =
@@ -75,8 +112,12 @@ export type All =
   | LoadAllSuccess
   | Load
   | LoadSuccess
+  | Create
+  | CreateSuccess
+  | Delete
+  | DeleteSuccess
   | Patch
   | Failure
   | PatchSuccess
-  | SetCurrentCarId
+  | SetCurrentCarId;
 

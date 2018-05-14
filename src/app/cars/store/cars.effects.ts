@@ -7,6 +7,7 @@ import {catchError, map, mergeMap, startWith, switchMap} from 'rxjs/operators';
 import {of} from 'rxjs/observable/of';
 import {CarsService} from '../services/cars.service';
 import {Car} from '../models/car.model';
+import {Create, CreateSuccess, Delete, DeleteSuccess, Failure} from './cars.actions';
 
 @Injectable()
 export class CarsEffects {
@@ -38,9 +39,31 @@ export class CarsEffects {
     switchMap((car: Car) => this.carsService.update(car)),
     map((value: Car) => new carsActions.PatchSuccess({id: value.id, changes: value})),
     catchError(err => {
-      alert(err['error']['error']['message']);
+      console.log(err);
       return of(new carsActions.Failure({concern: 'PATCH', error: err}));
     })
+  );
+
+  @Effect()
+  create$: Observable<Action> = this.actions$.pipe(
+    ofType(carsActions.CREATE),
+    map((action: Create) => action.payload),
+    switchMap((car) => this.carsService.create(car)),
+    map( (value: Car) => new CreateSuccess(value)),
+    catchError(err => {
+      return of(new Failure({concern: 'CREATE', error: err}));
+    })
+  );
+
+  @Effect()
+  delete$: Observable<Action> = this.actions$.pipe(
+    ofType(carsActions.DELETE),
+    map((action: Delete) => action.payload),
+    switchMap(
+      (id: number) => this.carsService.delete(id).pipe(
+        map( () => new DeleteSuccess(id))
+      )
+    )
   );
 
   constructor(

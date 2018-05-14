@@ -1,6 +1,6 @@
 {
-  "name": "decima",
-  "version": "0.0.0",
+  "name": "bx",
+  "version": "2.0.0",
   "license": "MIT",
   "scripts": {
     "ng": "ng",
@@ -17,6 +17,7 @@
     "@angular/compiler": "5.2.7",
     "@angular/core": "5.2.7",
     "@angular/forms": "5.2.7",
+    "@angular/http": "^6.0.1",
     "@angular/platform-browser": "5.2.7",
     "@angular/platform-browser-dynamic": "5.2.7",
     "@angular/router": "5.2.7",
@@ -30,6 +31,7 @@
     "@ngx-formly/core": "^2.0.0-rc.55",
     "@nrwl/nx": "0.11.0",
     "@swimlane/ngx-charts": "^7.2.0",
+    "angular-in-memory-web-api": "^0.5.4",
     "angular-pipes": "^7.1.0",
     "angularfire2": "^5.0.0-rc.6",
     "bootstrap": "4.0.0",

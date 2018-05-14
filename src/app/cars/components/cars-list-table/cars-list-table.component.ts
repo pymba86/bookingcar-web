@@ -1,9 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+
 import {Car} from '../../models/car.model';
-import {Store} from '@ngrx/store';
-import * as carsActions from '../../store/cars.actions';
-import * as fromCars from '../../store';
 
 @Component({
   selector: 'app-cars-list-table',
@@ -12,7 +9,7 @@ import * as fromCars from '../../store';
       <div class="card-header">
         <h3 class="card-title">Автомобили</h3>
         <div class="card-options">
-          <a href="#" class="btn btn-primary btn-sm">Добавить</a>
+          <a routerLink="/cars/create" class="btn btn-primary btn-sm">Добавить</a>
         </div>
       </div>
       <div class="table-responsive">
@@ -21,12 +18,13 @@ import * as fromCars from '../../store';
           <tr>
             <th class="w-1">№</th>
             <th>Марка</th>
-            <th></th>
+            <th class="w-1"></th>
+            <th class="w-1"></th>
             <th class="w-1"></th>
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let car of cars | async">
+          <tr *ngFor="let car of cars">
             <td>
               <span class="text-muted">
                {{ car.id }}
@@ -35,15 +33,19 @@ import * as fromCars from '../../store';
             <td>
               {{ car.name }}
             </td>
-            <td class="text-right">
-              <a routerLink="/cars/edit/{{ car.id }}" class="btn btn-secondary btn-sm">Manage</a>
-              <div class="dropdown">
-                <button class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown">Actions</button>
-              </div>
+            <td>
+              <a class="icon" (click)="showDetails(car)">
+                <i class="fe fe-eye"></i>
+              </a>
             </td>
             <td>
-              <a class="icon" href="javascript:void(0)">
+              <a class="icon" (click)="editCar(car)">
                 <i class="fe fe-edit"></i>
+              </a>
+            </td>
+            <td>
+              <a class="icon" (click)="deleteCar(car)">
+                <i class="fe fe-trash"></i>
               </a>
             </td>
           </tr>
@@ -53,16 +55,34 @@ import * as fromCars from '../../store';
     </div>
   `,
   styles: [],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CarsListTableComponent implements OnInit {
-  cars: Observable<Car[]>;
 
-  constructor(public store: Store<fromCars.CarsState>) {
+  @Input() cars: Car[];
+  @Output() onEdit = new EventEmitter<Car>();
+  @Output() onDelete = new EventEmitter<Car>();
+  @Output() onShow = new EventEmitter<Car>();
+
+  constructor() {
   }
 
-  ngOnInit(): void {
-    this.cars = this.store.select(fromCars.getAllCars);
-    this.store.dispatch(new carsActions.LoadAll());
+  ngOnInit() {
+
   }
+
+
+  showDetails(car: Car) {
+    this.onShow.emit(car);
+  }
+
+  editCar(car: Car) {
+    this.onEdit.emit(car);
+  }
+
+  deleteCar(car: Car) {
+    this.onDelete.emit(car);
+  }
+
 
 }

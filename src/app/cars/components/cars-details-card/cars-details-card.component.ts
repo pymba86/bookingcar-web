@@ -7,7 +7,10 @@ import {Car} from '../../models/car.model';
   template: `
     <div class="card" *ngIf="car">
       <div class="card-header">
-        Информация по автомобилю - {{ car.name }}
+        <h3 class="card-title">Информация по автомобилю - {{ car.name }}</h3>
+        <div class="card-options">
+          <a routerLink="/cars" class="btn btn-primary btn-sm">Вернутся</a>
+        </div>
       </div>
       <div class="card-body">
         <p>Уникинальный идентификатор: <span class="badge badge-primary">{{car.id}}</span></p>

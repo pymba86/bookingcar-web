@@ -8,7 +8,8 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: [
       {path: 'empty', children: []},
-      {path: 'cars', loadChildren: './cars/cars.module#CarsModule'}
+      {path: 'cars', loadChildren: './cars/cars.module#CarsModule'},
+      {path: '', redirectTo: 'cars',  pathMatch: 'full'}
     ]
   },
   {

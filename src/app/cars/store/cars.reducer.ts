@@ -28,6 +28,7 @@ export function reducer(
   switch (type) {
 
     case carsActions.LOAD_ALL_SUCCESS : {
+
       return {...state, ...carsAdapter.addAll(payload as Car[], state)}
     }
 
@@ -35,15 +36,24 @@ export function reducer(
       return {...state, currentCarId: payload}
     }
 
+    case carsActions.CREATE_SUCCESS  : {
+      return {...state, ...carsAdapter.addOne(payload as Car, state)}
+    }
+
     case carsActions.LOAD_SUCCESS : {
       return {...state, ...carsAdapter.addOne(payload as Car, state)}
     }
 
     case carsActions.PATCH_SUCCESS : {
+      console.log(payload);
       return {
         ...state,
         ...carsAdapter.updateOne(payload as Update<Car>, state)
       }
+    }
+
+    case carsActions.DELETE_SUCCESS : {
+      return carsAdapter.removeOne(payload, state);
     }
 
     default: {

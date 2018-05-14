@@ -8,7 +8,7 @@ import {Car} from '../../models/car.model';
   template: `
 
     <form (submit)="submit()" class="form" [formGroup]="form">
-
+      
       <div class="form-group">
         <label for="name-input">Название:</label>
         <input id="name-input" type="text" class="form-control" formControlName="name">
@@ -24,8 +24,7 @@ import {Car} from '../../models/car.model';
       </div>
 
     </form>
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  `
 })
 export class CarsFormComponent implements OnInit, OnChanges {
 

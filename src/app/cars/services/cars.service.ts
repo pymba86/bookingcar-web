@@ -1,27 +1,37 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
+import 'rxjs/add/observable/throw';
 import {Car} from '../models/car.model';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable()
 export class CarsService {
 
-  cars: Car[] = [{id: 1, name: 'Ford'}, {id: 2, name: 'Volvo'}, {id: 3, name: 'Toyota'}];
+  url = '/api/cars';
 
-  constructor() {
+  constructor(private http: HttpClient) {
   }
 
   list(): Observable<Car[]> {
-    return Observable.of(this.cars);
+    return this.http.get<Car[]>(this.url);
   }
 
   read(id: number): Observable<Car> {
-    return Observable.of(this.cars[id-1])
+    return this.http
+      .get<Car>(this.url + `/${id}`);
   }
 
   update(item: Car): Observable<Car> {
-    this.cars[item.id-1] = item;
-    return Observable.of(item)
+    return this.http.patch<Car>(this.url + `/${item.id}`, item);;
+  }
+
+  create(item: Car): Observable<Car> {
+    return this.http.post<Car>(this.url, item);
+  }
+
+  delete(id: number): Observable<Car> {
+    return this.http.delete<Car>(this.url + `/${id}`);
   }
 
 }
