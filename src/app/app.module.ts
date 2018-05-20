@@ -5,6 +5,8 @@ import {AppRoutingModule} from './app.routing.module';
 import {AppComponent} from './app.component';
 import {CoreModule} from '@tabler/angular-core';
 import {AppService} from './app.service';
+import {HttpClientModule} from '@angular/common/http';
+import {ProfileService} from './profiles/services/profile.service';
 
 @NgModule({
   declarations: [
@@ -13,14 +15,15 @@ import {AppService} from './app.service';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     CoreModule,
     AppRoutingModule,
   ],
-  providers: [AppService],
+  providers: [AppService, ProfileService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
   constructor(app: AppService) {
-    app.init()
+    app.init();
   }
 }
