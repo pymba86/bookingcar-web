@@ -2,18 +2,21 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {HttpResponse, HttpErrorResponse} from '@angular/common/http';
 import {CarsService} from '../services/cars.service';
 import {Car} from '../models/car.model';
+import {Router} from '@angular/router';
+import {Subscription} from 'rxjs/Subscription';
+import {NotificationService} from '../../notification/notification.service';
+import {Notification} from '../../notification/notification.model';
+import {CarFuel} from '../../cars-fuel/models/car-fuel.model';
 
 @Component({
   selector: 'app-cars-list',
   template: `
     <ui-page>
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Автомобиль</h3>
-          <div class="card-options">
-            <a routerLink="/cars/create" class="btn btn-primary btn-sm">Добавить</a>
-          </div>
-        </div>
+      <ui-card
+        (action)="handleAction($event)"
+        [header]="card.header"
+        [buttons]="card.buttons"
+        [alert]="notification">
         <div class="table-responsive" *ngIf="cars">
           <table class="table card-table table-vcenter text-nowrap">
             <thead>
@@ -56,7 +59,7 @@ import {Car} from '../models/car.model';
                 </a>
               </td>
               <td>
-                <a class="icon" (click)="delete(car.id)">
+                <a class="icon" (click)="remove(car.id)">
                   <i class="fe fe-trash"></i>
                 </a>
               </td>
@@ -64,14 +67,36 @@ import {Car} from '../models/car.model';
             </tbody>
           </table>
         </div>
-      </div>
+      </ui-card>
     </ui-page>
   `,
 })
 export class CarsListComponent implements OnInit {
-  cars: Car[];
+  notification: Notification;
+  subscription: Subscription;
 
-  constructor(private carsService: CarsService) {
+  cars: Car[];
+  card = {
+    header: 'Автомобиль',
+    buttons: [
+      {
+        text: 'Добавить',
+        type: 'button',
+        action: 'add',
+        payload: 'ADD_PAYLOAD'
+      }
+    ]
+  };
+
+
+  constructor(private carsService: CarsService,
+              private router: Router,
+              private notificationService: NotificationService) {
+    this.notification = this.notificationService.get();
+    this.subscription = this.notificationService.event
+      .subscribe((notification) => {
+        this.notification = notification;
+      });
   }
 
   loadAll() {
@@ -79,7 +104,7 @@ export class CarsListComponent implements OnInit {
       (res: HttpResponse<Car[]>) => {
         this.cars = res.body;
       },
-      (res: HttpErrorResponse) => alert(res.message)
+      (res: HttpErrorResponse) => this.notificationService.error(res.message)
     );
   }
 
@@ -87,8 +112,20 @@ export class CarsListComponent implements OnInit {
     this.loadAll();
   }
 
-  delete(id: number) {
-    this.carsService.delete(id);
+  remove(id: number) {
+    this.carsService.delete(id).subscribe(
+      (res: HttpResponse<CarFuel[]>) => {
+        this.cars = this.cars.filter(item => item.id !== id);
+      },
+      (res: HttpErrorResponse) => this.notificationService.error(res.message)
+    );
+  }
+
+  public handleAction($event) {
+    switch ($event.type) {
+      case 'add':
+        this.router.navigate(['cars', 'create']);
+    }
   }
 
 }

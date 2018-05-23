@@ -3,18 +3,22 @@ import {HttpResponse, HttpErrorResponse} from '@angular/common/http';
 
 import {CarLocation} from '../models/car-location.model';
 import {CarLocationService} from '../services/location';
+import {Subscription} from 'rxjs/Subscription';
+import {Notification} from '../../notification/notification.model';
+import {CarsGearboxService} from '../../cars-gearbox/services/cars-gearbox.service';
+import {NotificationService} from '../../notification/notification.service';
+import {Router} from '@angular/router';
+import {CarFuel} from '../../cars-fuel/models/car-fuel.model';
 
 @Component({
   selector: 'app-location-list',
   template: `
     <ui-page>
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Станция</h3>
-          <div class="card-options">
-            <a routerLink="/location/create" class="btn btn-primary btn-sm">Добавить</a>
-          </div>
-        </div>
+      <ui-card
+        (action)="handleAction($event)"
+        [header]="card.header"
+        [buttons]="card.buttons"
+        [alert]="notification">
         <div class="table-responsive" *ngIf="locations">
           <table class="table card-table table-vcenter text-nowrap">
             <thead>
@@ -45,7 +49,7 @@ import {CarLocationService} from '../services/location';
                 </a>
               </td>
               <td>
-                <a class="icon" (click)="delete(location.id)">
+                <a class="icon" (click)="remove(location.id)">
                   <i class="fe fe-trash"></i>
                 </a>
               </td>
@@ -53,22 +57,44 @@ import {CarLocationService} from '../services/location';
             </tbody>
           </table>
         </div>
-      </div>
+      </ui-card>
     </ui-page>
   `,
 })
 export class LocationListComponent implements OnInit {
-  locations: CarLocation[];
+  notification: Notification;
+  subscription: Subscription;
 
-  constructor(private carsActuatorService: CarLocationService) {
+  locations: CarLocation[];
+  card = {
+    header: 'Станция',
+    buttons: [
+      {
+        text: 'Добавить',
+        type: 'button',
+        action: 'add',
+        payload: 'ADD_PAYLOAD'
+      }
+    ]
+  };
+
+
+  constructor(private carsLocationService: CarLocationService,
+              private router: Router,
+              private notificationService: NotificationService) {
+    this.notification = this.notificationService.get();
+    this.subscription = this.notificationService.event
+      .subscribe((notification) => {
+        this.notification = notification;
+      });
   }
 
   loadAll() {
-    this.carsActuatorService.query().subscribe(
+    this.carsLocationService.query().subscribe(
       (res: HttpResponse<CarLocation[]>) => {
         this.locations = res.body;
       },
-      (res: HttpErrorResponse) => alert(res.message)
+      (res: HttpErrorResponse) => this.notificationService.error(res.message)
     );
   }
 
@@ -76,8 +102,21 @@ export class LocationListComponent implements OnInit {
     this.loadAll();
   }
 
-  delete(id: number) {
-    this.carsActuatorService.delete(id);
+  remove(id: number) {
+    this.carsLocationService.delete(id).subscribe(
+      (res: HttpResponse<CarFuel[]>) => {
+        this.locations = this.locations.filter(item => item.id !== id);
+      },
+      (res: HttpErrorResponse) => this.notificationService.error(res.message)
+    );
   }
+
+  handleAction($event) {
+    switch ($event.type) {
+      case 'add':
+        this.router.navigate(['location', 'create']);
+    }
+  }
+
 
 }

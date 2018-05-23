@@ -2,18 +2,22 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {HttpResponse, HttpErrorResponse} from '@angular/common/http';
 import {CarCategory} from '../models/cars-category.model';
 import {CarsCategoryService} from '../services/cars-category.service';
+import {Subscription} from 'rxjs/Subscription';
+import {Notification} from '../../notification/notification.model';
+import {CarsActuatorService} from '../../cars-actuator/services/cars-actuator.service';
+import {NotificationService} from '../../notification/notification.service';
+import {Router} from '@angular/router';
+import {CarFuel} from '../../cars-fuel/models/car-fuel.model';
 
 @Component({
   selector: 'app-cars-category-list',
   template: `
     <ui-page>
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Категория</h3>
-          <div class="card-options">
-            <a routerLink="/cars-category/create" class="btn btn-primary btn-sm">Добавить</a>
-          </div>
-        </div>
+      <ui-card
+        (action)="handleAction($event)"
+        [header]="card.header"
+        [buttons]="card.buttons"
+        [alert]="notification">
         <div class="table-responsive" *ngIf="carCategories">
           <table class="table card-table table-vcenter text-nowrap">
             <thead>
@@ -44,7 +48,7 @@ import {CarsCategoryService} from '../services/cars-category.service';
                 </a>
               </td>
               <td>
-                <a class="icon" (click)="delete(carCategory.id)">
+                <a class="icon" (click)="remove(carCategory.id)">
                   <i class="fe fe-trash"></i>
                 </a>
               </td>
@@ -52,14 +56,35 @@ import {CarsCategoryService} from '../services/cars-category.service';
             </tbody>
           </table>
         </div>
-      </div>
+      </ui-card>
     </ui-page>
   `,
 })
 export class CarsCategoryListComponent implements OnInit {
-  carCategories: CarCategory[];
+  notification: Notification;
+  subscription: Subscription;
 
-  constructor(private carsCategoryService: CarsCategoryService) {
+  carCategories: CarCategory[];
+  card = {
+    header: 'Категория',
+    buttons: [
+      {
+        text: 'Добавить',
+        type: 'button',
+        action: 'add',
+        payload: 'ADD_PAYLOAD'
+      }
+    ]
+  };
+
+  constructor(private carsCategoryService: CarsCategoryService,
+              private router: Router,
+              private notificationService: NotificationService) {
+    this.notification = this.notificationService.get();
+    this.subscription = this.notificationService.event
+      .subscribe((notification) => {
+        this.notification = notification;
+      });
   }
 
   loadAll() {
@@ -67,7 +92,7 @@ export class CarsCategoryListComponent implements OnInit {
       (res: HttpResponse<CarCategory[]>) => {
         this.carCategories = res.body;
       },
-      (res: HttpErrorResponse) => alert(res.message)
+      (res: HttpErrorResponse) => this.notificationService.error(res.message)
     );
   }
 
@@ -75,8 +100,20 @@ export class CarsCategoryListComponent implements OnInit {
     this.loadAll();
   }
 
-  delete(id: number) {
-    this.carsCategoryService.delete(id);
+  remove(id: number) {
+    this.carsCategoryService.delete(id).subscribe(
+      (res: HttpResponse<CarFuel[]>) => {
+        this.carCategories = this.carCategories.filter(item => item.id !== id);
+      },
+      (res: HttpErrorResponse) => this.notificationService.error(res.message)
+    );
+  }
+
+  handleAction($event) {
+    switch ($event.type) {
+      case 'add':
+        this.router.navigate(['cars-category', 'create']);
+    }
   }
 
 }

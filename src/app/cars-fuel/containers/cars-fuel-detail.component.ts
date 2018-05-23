@@ -28,12 +28,6 @@ import {CarsFuelService} from '../services/cars-fuel.service';
             </dd>
           </dl>
         </div>
-        <div class="card-footer text-muted">
-      <span class="float-md-right ">
-        <a [routerLink]="['edit']" class="btn btn-sm btn-outline-warning"> Изменить</a>
-       <button (click)="remove(carFuel.id)" class="btn btn-sm btn-outline-error"> Удалить</button>
-      </span>
-        </div>
       </div>
     </ui-page>`
 })
@@ -66,14 +60,5 @@ export class CarsFuelDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
-  }
-
-  remove(id: number) {
-    this.carFuelService.delete(id).subscribe(
-      (res: HttpResponse<CarFuel[]>) => {
-        this.router.navigate(['cars-fuel']);
-      },
-      (res: HttpErrorResponse) => alert(res.message)
-    );
   }
 }

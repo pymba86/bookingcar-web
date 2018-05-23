@@ -78,11 +78,6 @@ import {CarsService} from '../services/cars.service';
             </dd>
           </dl>
         </div>
-        <div class="card-footer text-muted">
-      <span class="float-md-right ">
-        <a [routerLink]="['cars', car.id + '/edit' ]" class="btn btn-sm btn-outline-warning"> Изменить</a>
-      </span>
-        </div>
       </div>
     </ui-page>`
 })

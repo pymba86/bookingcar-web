@@ -2,18 +2,22 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {HttpResponse, HttpErrorResponse} from '@angular/common/http';
 import {CarGearbox} from '../models/car-gearbox.model';
 import {CarsGearboxService} from '../services/cars-gearbox.service';
+import {Subscription} from 'rxjs/Subscription';
+import {Notification} from '../../notification/notification.model';
+import {NotificationService} from '../../notification/notification.service';
+import {CarsFuelService} from '../../cars-fuel/services/cars-fuel.service';
+import {Router} from '@angular/router';
+import {CarFuel} from '../../cars-fuel/models/car-fuel.model';
 
 @Component({
   selector: 'app-cars-gearbox-list',
   template: `
     <ui-page>
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Коробка передач</h3>
-          <div class="card-options">
-            <a routerLink="/cars-gearbox/create" class="btn btn-primary btn-sm">Добавить</a>
-          </div>
-        </div>
+      <ui-card
+        (action)="handleAction($event)"
+        [header]="card.header"
+        [buttons]="card.buttons"
+        [alert]="notification">
         <div class="table-responsive" *ngIf="carGearboxes">
           <table class="table card-table table-vcenter text-nowrap">
             <thead>
@@ -40,7 +44,7 @@ import {CarsGearboxService} from '../services/cars-gearbox.service';
                 </a>
               </td>
               <td>
-                <a class="icon" (click)="delete(carGearbox.id)">
+                <a class="icon" (click)="remove(carGearbox.id)">
                   <i class="fe fe-trash"></i>
                 </a>
               </td>
@@ -48,14 +52,36 @@ import {CarsGearboxService} from '../services/cars-gearbox.service';
             </tbody>
           </table>
         </div>
-      </div>
+      </ui-card>
     </ui-page>
   `,
 })
 export class CarsGearboxListComponent implements OnInit {
-  carGearboxes: CarGearbox[];
+  notification: Notification;
+  subscription: Subscription;
 
-  constructor(private carsGearboxService: CarsGearboxService) {
+  carGearboxes: CarGearbox[];
+  card = {
+    header: 'Коробка передач',
+    buttons: [
+      {
+        text: 'Добавить',
+        type: 'button',
+        action: 'add',
+        payload: 'ADD_PAYLOAD'
+      }
+    ]
+  };
+
+
+  constructor(private carsGearboxService: CarsGearboxService,
+              private router: Router,
+              private notificationService: NotificationService) {
+    this.notification = this.notificationService.get();
+    this.subscription = this.notificationService.event
+      .subscribe((notification) => {
+        this.notification = notification;
+      });
   }
 
   loadAll() {
@@ -63,7 +89,7 @@ export class CarsGearboxListComponent implements OnInit {
       (res: HttpResponse<CarGearbox[]>) => {
         this.carGearboxes = res.body;
       },
-      (res: HttpErrorResponse) => alert(res.message)
+      (res: HttpErrorResponse) => this.notificationService.error(res.message)
     );
   }
 
@@ -71,8 +97,20 @@ export class CarsGearboxListComponent implements OnInit {
     this.loadAll();
   }
 
-  delete(id: number) {
-    this.carsGearboxService.delete(id);
+  remove(id: number) {
+    this.carsGearboxService.delete(id).subscribe(
+      (res: HttpResponse<CarFuel[]>) => {
+        this.carGearboxes = this.carGearboxes.filter(item => item.id !== id);
+      },
+      (res: HttpErrorResponse) => this.notificationService.error(res.message)
+    );
+  }
+
+  handleAction($event) {
+    switch ($event.type) {
+      case 'add':
+        this.router.navigate(['cars-gearbox', 'create']);
+    }
   }
 
 }

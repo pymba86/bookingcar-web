@@ -12,13 +12,6 @@ import {CarFuel} from '../models/car-fuel.model';
       <div class="card">
         <div class="card-header">
           <h3 class="card-title">Топливо</h3>
-          <div class="card-options">
-            <button type="submit"
-                    (click)="previousState()"
-                    class="btn btn-sm btn-info">
-              <span class="fa fa-arrow-left"></span>&nbsp;<span> Назад</span>
-            </button>
-          </div>
         </div>
         <div class="card-body">
           <form (submit)="save()" name="editForm" role="form" class="form" novalidate #editForm="ngForm">
